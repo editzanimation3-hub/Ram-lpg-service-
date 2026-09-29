@@ -1,0 +1,9 @@
+{
+  "name": "LPG Service Portal",
+  "description": "Book LPG, manage accounts, make payments, track deliveries, and raise service requests.",
+  "requestFramePermissions": [
+    "camera"
+  ],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
+

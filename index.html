@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>LPG Service Portal</title>
+  <meta name="description" content="Book LPG, manage accounts, make payments, track deliveries, and raise service requests." />
+  <meta property="og:title" content="LPG Service Portal" />
+  <meta property="og:description" content="Book LPG, manage accounts, make payments, track deliveries, and raise service requests." />
+  <meta property="og:type" content="website" />
+  <meta name="twitter:card" content="summary_large_image" />
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
+
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+
+  <link rel="stylesheet" href="/src/portal.css" />
+</head>
+<body>
+<div id="loginScreen" class="login">
+  <div class="login-left">
+    <div class="brand"><span class="flame">🔥</span> LPG Service Portal</div>
+    <h1>Welcome to<br>LPG Service Portal</h1>
+    <p>Book LPG, manage your account, make payments and raise service requests from one secure portal.</p>
+    <div class="features">
+      <div class="feature">🛡️ <b>Safe & Secure</b></div>
+      <div class="feature">⚡ <b>Fast & Easy</b></div>
+      <div class="feature">💬 <b>24/7 Support</b></div>
+      <div class="feature">🌱 <b>Clean Energy for a Greener Future</b></div>
+    </div>
+    <div class="cylinder">🛢️</div>
+  </div>
+  <div class="login-right">
+    <div class="login-card">
+      <h2>Login to Your Account</h2>
+      <div class="sub">Select your role and login to continue</div>
+      <div class="roles">
+        <button class="role customer active" onclick="selectRole('customer')">👤<br>Customer Login</button>
+        <button class="role admin" onclick="selectRole('admin')">👨‍💼<br>Admin Login</button>
+        <button class="role owner" onclick="selectRole('owner')">👑<br>Owner Login</button>
+      </div>
+      <div class="field"><label>Username / Mobile Number</label><input id="loginUser" placeholder="Enter username or mobile number"></div>
+      <div class="field"><label>Password</label><input id="loginPass" type="password" placeholder="Enter password"></div>
+      <div class="actions" style="justify-content:space-between;align-items:center">
+        <label><input type="checkbox"> Remember Me</label>
+        <button class="btn btn-light" style="padding:7px 10px" onclick="alert('Demo: contact portal owner to reset password.')">Forgot Password?</button>
+      </div>
+      <div style="margin-top:15px"><button class="btn btn-primary" onclick="login()">↪ Login</button></div>
+      <div style="display:flex;align-items:center;gap:10px;margin:15px 0;color:#718096;font-size:12px">
+        <span style="height:1px;background:#dce5ef;flex:1"></span>OR<span style="height:1px;background:#dce5ef;flex:1"></span>
+      </div>
+      <button class="btn btn-light" style="width:100%;border:1px solid #dce5ef;background:#fff" onclick="googleLogin()">🌐 Continue with Google (Owner)</button>
+      <div class="demo">Google Login is for the authorized Owner Google account. Customer/Admin can continue using their portal ID and password.</div>
+      <div class="login-links">
+        <button onclick="openForgot()">Forgot Password</button>
+        <span>•</span>
+        <button onclick="openSignup()">Create Customer Account / Signup</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="modalRoot" class="hidden">
+  <div class="modal" onclick="if(event.target===this) closeModal()">
+    <div class="modal-card" id="modalCard"></div>
+  </div>
+</div>
+
+<div id="app" class="app hidden">
+  <header class="topbar">
+    <div class="brand"><span class="flame">🔥</span> LPG Service Portal</div>
+    <div class="userbar">
+      <span id="rolePill" class="role-pill"></span>
+      <button class="btn btn-light" onclick="logout()">Logout</button>
+    </div>
+  </header>
+  <div class="layout">
+    <aside class="side">
+      <h3 id="sideTitle"></h3>
+      <nav id="nav" class="nav"></nav>
+    </aside>
+    <main id="main" class="main"></main>
+  </div>
+</div>
+
+<div id="root"></div>
+
+<script src="/src/portal.js"></script>
+<script type="module" src="/src/main.tsx"></script>
+</body>
+</html>
